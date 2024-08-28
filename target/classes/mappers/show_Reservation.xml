@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.ict03_fastiCat.dao.ReservationDAO">
+
+	<!-- 1달간 공연 목록 -->
+	<select id="ResList" parameterType="String" resultType="com.spring.ict03_fastiCat.dto.ShowDTO">
+		SELECT showNum, showName, curCapacity, maxCapacity, showDay, show 
+		FROM show_tbl 
+		WHERE EXTRACT(MONTH FROM showDay) = #{curMonth}
+		  AND EXTRACT(YEAR FROM showDay) = EXTRACT(YEAR FROM SYSDATE)
+		  AND SHOW = 'y'  
+		ORDER BY showNum
+	</select>
+	
+	<!-- 메인페이지에서 선택한 상세정보 -->
+	<select id="ResDetailPageView" parameterType="int" resultType="com.spring.ict03_fastiCat.dto.ShowDTO">
+		SELECT showNum, showName,showPlace, showPrice,showTime,showAge,showBene,curCapacity, maxCapacity, showDay,showImage ,show, showCategory 
+		FROM show_tbl 
+		WHERE SHOW LIKE 'y' 
+		AND showNum = #{showNum}  
+		ORDER BY showNum
+	</select>
+	
+	<!-- 메인페이지에서 선택한 상세정보 달력-->
+	<select id="ResDetailPageViewList" parameterType="String" resultType="com.spring.ict03_fastiCat.dto.ShowDTO">
+		SELECT *  
+		FROM show_tbl 
+		WHERE showName LIKE #{ShowName} 
+		AND SHOW LIKE 'y' 
+		ORDER BY SHOWNUM
+	</select>
+	
+	
+	<update id="showUpdate" parameterType="java.util.Map">
+	    UPDATE show_tbl 
+	    SET curCapacity = curCapacity + #{quantity, jdbcType=INTEGER} 
+	    WHERE shownum = #{showNum, jdbcType=INTEGER}
+	</update>
+	
+	<insert id="ticketInsert" parameterType="java.util.Map">
+	    INSERT INTO show_Reservation (show_ResId, showNum, userID, totalPrice, Reservation_date) 
+	    VALUES (show_Reservation_seq.NEXTVAL, #{showNum, jdbcType=INTEGER}, #{userID, jdbcType=VARCHAR}, #{totalPrice, jdbcType=INTEGER}, #{showDay, jdbcType=DATE})
+	</insert> 
+	
+	<!-- 공연예매 -->
+	<insert id="addReservation" parameterType="com.spring.ict03_fastiCat.dto.ReservationDTO">
+		INSERT INTO show_Reservation(show_ResId, showNum, showName, userID, amount, totalPrice, reservation_date)
+		VALUES ((SELECT NVL(MAX(show_ResId)+1,1) FROM show_Reservation), #{showNum, jdbcType=INTEGER}, #{showName, jdbcType=VARCHAR},  #{userID, jdbcType=VARCHAR},#{amount, jdbcType=INTEGER}, #{totalPrice, jdbcType=INTEGER}, #{reservation_date, jdbcType=DATE})
+	</insert>
+	
+	<!-- 1 인당 예매 2매 제한 -->
+	<select id="selectById" parameterType="java.util.Map" resultType="int">
+		SELECT COALESCE(SUM(amount),0) AS cnt FROM SHOW_RESERVATION
+		 WHERE showName = #{showName, jdbcType=VARCHAR}
+		   AND userID = #{userID, jdbcType=VARCHAR}
+	</select>
+</mapper>
+  
