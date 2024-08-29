@@ -30,7 +30,7 @@
 	
 	<!-- 공지사항 목록 -->
 	<select id="noticeList" resultType="com.spring.ict03_fastiCat.dto.NoticeDTO">
-		SELECT * FROM mvc_Notice_TBL WHERE show = 'y' ORDER BY N_Board_Num
+		SELECT * FROM mvc_Notice_TBL WHERE 'show' = 'y' ORDER BY N_Board_Num
 	</select>
 	
 	<!-- 공지사항 상세페이지 -->
@@ -49,7 +49,7 @@
 	<!-- 공지사항 삭제  -->
 	<update id="deleteNotice" parameterType="int">
 		UPDATE mvc_Notice_TBL
-		SET show='n'
+		SET 'show'='n'
 		WHERE N_Board_Num =#{n_Board_Num}
 	</update>
 	

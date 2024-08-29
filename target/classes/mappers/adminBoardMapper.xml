@@ -11,13 +11,13 @@
 		SELECT COUNT(*) AS cnt FROM 
 		<choose>
 			<when test="category == '공연후기'">
-				reviewboard_tbl
+				reviewBoard_tbl
 			</when>
 			<otherwise>
 				freeBoard_tbl
 			</otherwise>
 		</choose>
-		WHERE board_show = 'y'
+		WHERE `show` = 'y'
 	</select>
 	
 	<!-- 공연후기, 자유게시판 목록 조회 -->
@@ -25,13 +25,13 @@
 		SELECT * FROM 
 		<choose>
 			<when test="category == '공연후기'">
-				reviewboard_tbl
+				reviewBoard_tbl
 			</when>
 			<otherwise>
 				freeBoard_tbl
 			</otherwise>
 		</choose>
-		WHERE board_show = 'y'
+		WHERE `show` = 'y'
 		ORDER BY board_num
 	</select>
 	
@@ -40,13 +40,13 @@
 		UPDATE 
 		<choose>
 			<when test="category == '공연후기'">
-				reviewboard_tbl
+				reviewBoard_tbl
 			</when>
 			<otherwise>
 				freeBoard_tbl
 			</otherwise>
 		</choose>
-		SET board_show = 'n'
+		SET `show` = 'n'
 		WHERE board_num = #{board_num}
 	</update>
 	

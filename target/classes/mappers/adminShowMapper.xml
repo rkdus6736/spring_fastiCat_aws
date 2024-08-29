@@ -29,7 +29,7 @@
       <when test="category == '페스티벌'">show_tbl_fes</when>
       <otherwise>show_tbl</otherwise>
     </choose>
-   		WHERE show = 'y'
+   		WHERE 'show' = 'y'
     </select>
 	
 	
@@ -40,7 +40,7 @@
       <when test="category == '페스티벌'">show_tbl_fes</when>
       <otherwise>show_tbl</otherwise>
      </choose>
-    	WHERE show = 'y'
+    	WHERE 'show' = 'y'
     	ORDER BY showNum
     </select>
   
@@ -81,7 +81,7 @@
 	    <when test="category == '페스티벌'">show_tbl_fes</when>
 	    <otherwise>show_tbl</otherwise>
 	  </choose>
-		   SET show = 'n'
+		   SET 'show' = 'n'
 		 WHERE showNum =#{showNum}
 	</update>
 	
