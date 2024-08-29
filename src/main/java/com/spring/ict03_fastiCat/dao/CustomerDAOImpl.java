@@ -88,7 +88,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	     // import javax.mail.Message
 		 // import javax.mail.Transport;
 		Message mimeMessage = new MimeMessage(session);
-		mimeMessage.setFrom(new InternetAddress("fasticat_ict03@naver.com"));   // 발신자 세팅
+		mimeMessage.setFrom(new InternetAddress("rkdus6736@naver.com"));   // 발신자 세팅
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자 세팅
 		mimeMessage.setSubject(subject);   // 제목세팅
 		mimeMessage.setContent(content, "text/html; charset=utf-8");
